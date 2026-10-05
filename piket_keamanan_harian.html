@@ -475,14 +475,14 @@
             <span class="icon">⚠️</span>
             <div>
                 <strong>Sudah Ada Laporan</strong><br>
-                Anda sudah mengirim laporan untuk hari ini. Anda masih dapat mengirim ulang jika ada perbaikan.
+                Laporan hari ini sudah terkirim. Laporan tambahan masih dapat dibuat jika ada perbaikan.
             </div>
         </div>
 
         <!-- Identity Section -->
         <div class="card">
             <div class="form-group" style="margin:0;">
-                <label for="input-nama">Nama Petugas <span style="color: var(--danger);">*</span></label>
+                <label for="input-nama">Nama Asisten Lab <span style="color: var(--danger);">*</span></label>
                 <input type="text" id="input-nama" placeholder="Masukkan nama Anda..." required autocomplete="name">
             </div>
         </div>
@@ -561,10 +561,10 @@
         <div class="modal-content">
             <div class="success-icon" style="font-size: 48px;">⚠️</div>
             <h2 class="modal-title">Tugas Belum Selesai</h2>
-            <p class="modal-text">Masih ada tugas yang belum dicentang. Apakah Anda yakin ingin tetap mengirim laporan?</p>
+            <p class="modal-text">Masih ada tugas yang belum selesai. Apakah yakin ingin tetap mengirim laporan?</p>
             <div class="modal-actions">
-                <button id="btn-cancel-submit" class="btn btn-outline">Batal</button>
-                <button id="btn-confirm-submit" class="btn">Tetap Kirim</button>
+                <button id="btn-cancel-submit" class="btn btn-outline">Cek ulang</button>
+                <button id="btn-confirm-submit" class="btn">Kirim aja</button>
             </div>
         </div>
     </div>
@@ -615,6 +615,7 @@
             { id: "umum_2", label: "Membersihkan meja" },
             { id: "umum_3", label: "Memastikan lampu dan AC sudah mati" },
             { id: "umum_4", label: "Mengisi ulang air untuk robot vacuum Xiaomi" }
+            { id: "umum_4", label: "Mencuci gelas & peralatan makan" }
         ];
 
         const TUGAS_KHUSUS_MAP = {
