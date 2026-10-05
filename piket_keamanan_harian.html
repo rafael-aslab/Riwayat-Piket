@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Piket & Keamanan Harian</title>
+    
+    <style>
+        :root {
+            /* Light Theme Variables */
+            --bg-color: #f0ebf8;
+            --card-bg: #ffffff;
+            --text-main: #202124;
+            --text-muted: #5f6368;
+            --border-color: #dadce0;
+            --primary: #673ab7;
+            --primary-hover: #5e35b1;
+            --primary-light: #ede7f6;
+            --danger: #d93025;
+            --danger-bg: #fce8e6;
+            --success: #1e8e3e;
+            --success-bg: #e6f4ea;
+            --warning: #f29900;
+            --warning-bg: #fef7e0;
+            --header-bg: #ffffff;
+            --header-border: #673ab7;
+            --input-bg: #ffffff;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                /* Dark Theme Variables */
+                --bg-color: #121212;
+                --card-bg: #1e1e1e;
+                --text-main: #e8eaed;
+                --text-muted: #9aa0a6;
+                --border-color: #3c4043;
+                --primary: #b39ddb;
+                --primary-hover: #d1c4e9;
+                --primary-light: #311b92;
+                --danger: #f28b82;
+                --danger-bg: #3c1618;
+                --success: #81c995;
+                --success-bg: #13331b;
+                --warning: #fdd663;
+                --warning-bg: #413000;
+                --header-bg: #1e1e1e;
+                --header-border: #b39ddb;
+                --input-bg: #2a2a2a;
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.5;
+            padding: 16px;
+            padding-bottom: 80px;
+        }
+
+        .container {
+            max-width: 640px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            padding: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card.header-card {
+            border-top: 8px solid var(--header-border);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .card-desc {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .text-muted {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        .info-value {
+            font-weight: 600;
+            text-align: right;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            font-size: 1rem;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 12px 16px;
+            font-size: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background-color: var(--input-bg);
+            color: var(--text-main);
+            transition: border-color 0.2s, box-shadow 0.2s;
+            min-height: 48px; /* Large tap target */
+        }
+
+        input[type="text"]:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px var(--primary-light);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        /* Custom Checkbox List */
+        .checklist-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .check-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background-color: var(--input-bg);
+            cursor: pointer;
+            transition: background-color 0.2s;
+            min-height: 48px;
+        }
+
+        .check-item:active {
+            background-color: var(--primary-light);
+        }
+
+        .check-item input[type="checkbox"] {
+            width: 24px;
+            height: 24px;
+            margin-right: 12px;
+            margin-top: 2px;
+            accent-color: var(--primary);
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .check-item.keamanan {
+            border-color: var(--warning);
+            background-color: var(--warning-bg);
+        }
+        
+        .check-item.keamanan .check-label {
+            font-weight: 600;
+        }
+
+        .check-label {
+            font-size: 1rem;
+            user-select: none;
+            padding-top: 3px;
+        }
+
+        .progress-container {
+            background-color: var(--border-color);
+            border-radius: 4px;
+            height: 8px;
+            width: 100%;
+            margin-bottom: 12px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background-color: var(--primary);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            text-align: right;
+            font-weight: 500;
+        }
+
+        /* Photo Upload */
+        .file-upload-wrapper {
+            position: relative;
+            margin-bottom: 16px;
+        }
+
+        .file-upload-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 12px 16px;
+            background-color: var(--primary-light);
+            color: var(--primary);
+            border: 2px dashed var(--primary);
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            min-height: 56px;
+        }
+
+        .file-upload-input {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .thumbnails {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .thumbnail-wrapper {
+            position: relative;
+            width: 100%;
+            padding-top: 100%; /* 1:1 Aspect ratio */
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        .thumbnail-wrapper img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .remove-photo-btn {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            background: rgba(0,0,0,0.6);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 14px;
+            padding: 0;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 14px 20px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.2s, opacity 0.2s;
+            min-height: 52px;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .btn:disabled {
+            background-color: var(--border-color);
+            color: var(--text-muted);
+            cursor: not-allowed;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+
+        .alert {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            font-size: 0.95rem;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+        
+        .alert.warning {
+            background-color: var(--warning-bg);
+            color: #855e00;
+            border: 1px solid #fce8b2;
+        }
+
+        .alert.danger {
+            background-color: var(--danger-bg);
+            color: var(--danger);
+            border: 1px solid #fad2cf;
+        }
+
+        /* Modals & Overlays */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-color);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-bg {
+            background-color: rgba(0,0,0,0.5);
+            backdrop-filter: blur(2px);
+        }
+
+        .modal-content {
+            background-color: var(--card-bg);
+            padding: 24px;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .modal-text {
+            color: var(--text-muted);
+            margin-bottom: 24px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .modal-actions .btn {
+            flex: 1;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .icon {
+            font-size: 1.2rem;
+            line-height: 1;
+        }
+
+        /* Success screen specific */
+        .success-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Main Container -->
+    <div class="container" id="main-container">
+        
+        <!-- Header Card -->
+        <div class="card header-card">
+            <h1 class="card-title">Piket & Keamanan Harian</h1>
+            <p class="card-desc">Laporan pelaksanaan tugas piket dan pengecekan keamanan harian.</p>
+            
+            <div class="info-row">
+                <span class="info-label">Tanggal</span>
+                <span class="info-value" id="display-date">Memuat...</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Waktu</span>
+                <span class="info-value" id="display-time">--:--</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">PIC Hari Ini</span>
+                <span class="info-value" id="display-pic" style="color: var(--primary);">Memuat...</span>
+            </div>
+        </div>
+
+        <!-- Warning Alert for already submitted -->
+        <div id="alert-submitted" class="alert warning hidden">
+            <span class="icon">⚠️</span>
+            <div>
+                <strong>Sudah Ada Laporan</strong><br>
+                Anda sudah mengirim laporan untuk hari ini. Anda masih dapat mengirim ulang jika ada perbaikan.
+            </div>
+        </div>
+
+        <!-- Identity Section -->
+        <div class="card">
+            <div class="form-group" style="margin:0;">
+                <label for="input-nama">Nama Petugas <span style="color: var(--danger);">*</span></label>
+                <input type="text" id="input-nama" placeholder="Masukkan nama Anda..." required autocomplete="name">
+            </div>
+        </div>
+
+        <!-- Checklist Section -->
+        <div class="card">
+            <h2 class="section-title">Daftar Tugas</h2>
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            <div class="progress-text" id="progress-text">0 dari 0 tugas selesai</div>
+
+            <!-- Tugas Umum Container -->
+            <div class="checklist-container" id="tugas-umum-container">
+                <!-- Rendered via JS -->
+            </div>
+            
+            <br>
+            <h2 class="section-title" style="margin-top: 8px;">Tugas Khusus (<span id="pic-label"></span>)</h2>
+            <div class="checklist-container" id="tugas-khusus-container">
+                <!-- Rendered via JS -->
+            </div>
+
+            <br>
+            <h2 class="section-title" style="margin-top: 8px;"><span class="icon">🔒</span> Keamanan</h2>
+            <div class="checklist-container" id="tugas-keamanan-container">
+                <!-- Rendered via JS -->
+            </div>
+        </div>
+
+        <!-- Photo Evidence Section -->
+        <div class="card">
+            <h2 class="section-title">Foto Bukti <span style="color: var(--danger); margin-left: 4px;">*</span></h2>
+            <p class="text-muted" style="margin-bottom: 16px;">Lampirkan minimal 1 dan maksimal 5 foto bukti pelaksanaan tugas.</p>
+            
+            <div class="file-upload-wrapper">
+                <div class="file-upload-btn">
+                    <span class="icon">📷</span> Ambil / Pilih Foto
+                </div>
+                <input type="file" id="input-foto" class="file-upload-input" accept="image/*" capture="environment" multiple>
+            </div>
+            
+            <div id="error-foto" class="text-muted" style="color: var(--danger); font-size: 0.85rem; display: none; margin-bottom: 8px;"></div>
+            
+            <div class="thumbnails" id="thumbnails-container">
+                <!-- Thumbnails rendered here -->
+            </div>
+        </div>
+
+        <!-- Notes Section -->
+        <div class="card">
+            <div class="form-group" style="margin:0;">
+                <label for="input-catatan">Catatan (Opsional)</label>
+                <textarea id="input-catatan" placeholder="Tambahkan keterangan tambahan jika ada..."></textarea>
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div style="margin-top: 8px; margin-bottom: 24px;">
+            <button id="btn-submit" class="btn" disabled>Kirim Laporan</button>
+        </div>
+    </div>
+
+    
+    <!-- Sunday Blocker Overlay -->
+    <div id="overlay-minggu" class="overlay">
+        <div class="modal-content">
+            <div class="success-icon">☕</div>
+            <h2 class="modal-title">Hari Libur</h2>
+            <p class="modal-text">Tidak ada jadwal piket untuk hari Minggu. Selamat beristirahat!</p>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal (Incomplete Tasks) -->
+    <div id="modal-confirm" class="overlay modal-bg">
+        <div class="modal-content">
+            <div class="success-icon" style="font-size: 48px;">⚠️</div>
+            <h2 class="modal-title">Tugas Belum Selesai</h2>
+            <p class="modal-text">Masih ada tugas yang belum dicentang. Apakah Anda yakin ingin tetap mengirim laporan?</p>
+            <div class="modal-actions">
+                <button id="btn-cancel-submit" class="btn btn-outline">Batal</button>
+                <button id="btn-confirm-submit" class="btn">Tetap Kirim</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="overlay-loading" class="overlay modal-bg">
+        <div class="modal-content" style="background: transparent; box-shadow: none; color: white;">
+            <div style="font-size: 48px; animation: spin 1s linear infinite;">⏳</div>
+            <h2 style="margin-top: 16px;">Mengirim Laporan...</h2>
+        </div>
+        <style>@keyframes spin { 100% { transform: rotate(360deg); } }</style>
+    </div>
+
+    <!-- Success Overlay -->
+    <div id="overlay-success" class="overlay" style="background-color: var(--bg-color);">
+        <div class="modal-content" style="background: transparent; box-shadow: none;">
+            <div class="success-icon">✅</div>
+            <h2 class="modal-title">Laporan Terkirim</h2>
+            <p class="modal-text">Terima kasih. Laporan piket dan keamanan telah berhasil dicatat pada sistem.</p>
+            <div style="margin-bottom: 24px;">
+                <span class="info-label">Waktu Pengiriman:</span><br>
+                <strong id="success-time">--:--</strong>
+            </div>
+            <button id="btn-reset" class="btn">Buat Laporan Baru</button>
+        </div>
+    </div>
+    
+    <!-- Error Overlay -->
+    <div id="overlay-error" class="overlay modal-bg">
+        <div class="modal-content">
+            <div class="success-icon" style="font-size: 48px;">❌</div>
+            <h2 class="modal-title">Gagal Mengirim</h2>
+            <p class="modal-text" id="error-message">Terjadi kesalahan saat menghubungi server. Silakan coba beberapa saat lagi.</p>
+            <div class="modal-actions">
+                <button id="btn-close-error" class="btn btn-outline">Tutup</button>
+                <button id="btn-retry" class="btn">Coba Lagi</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration
+        const API_URL = "https://script.google.com/macros/s/AKfycbwJzUQ3qUR_HSEH150eFD5AA81V9eRgHB-KpWpR9xBzbb881--P9ZkVlHVhMOl91iQn/exec";
+        
+        // Data Definitions
+        const TUGAS_UMUM = [
+            { id: "umum_1", label: "Menyapu / vacuum lantai" },
+            { id: "umum_2", label: "Membersihkan meja" },
+            { id: "umum_3", label: "Memastikan lampu dan AC sudah mati" },
+            { id: "umum_4", label: "Mengisi ulang air untuk robot vacuum Xiaomi" }
+        ];
+
+        const TUGAS_KHUSUS_MAP = {
+            "Angkatan 23": [{ id: "khusus_23", label: "Membersihkan Dry cabinet & PC" }],
+            "Angkatan 24": [{ id: "khusus_24", label: "Membersihkan Microwave & dispenser" }],
+            "Angkatan 25": [{ id: "khusus_25", label: "Membersihkan Kulkas" }]
+        };
+
+        const TUGAS_KEAMANAN = [
+            { id: "aman_1", label: "Mengunci pintu ruang 303" },
+            { id: "aman_2", label: "Mengunci pintu ruang 304" }
+        ];
+
+        const NAMA_HARI = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+        const NAMA_BULAN = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+
+        // State Variables
+        let currentDateString = "";
+        let currentDayName = "";
+        let currentPic = "";
+        let activeTasksList = [];
+        let photosData = []; // Array of { name, mime, data (base64) }
+        let totalCheckboxes = 0;
+        let checkedCount = 0;
+
+        // DOM Elements
+        const elDisplayDate = document.getElementById('display-date');
+        const elDisplayTime = document.getElementById('display-time');
+        const elDisplayPic = document.getElementById('display-pic');
+        const elPicLabel = document.getElementById('pic-label');
+        
+        const elTugasUmum = document.getElementById('tugas-umum-container');
+        const elTugasKhusus = document.getElementById('tugas-khusus-container');
+        const elTugasKeamanan = document.getElementById('tugas-keamanan-container');
+        
+        const elProgressBar = document.getElementById('progress-bar');
+        const elProgressText = document.getElementById('progress-text');
+        
+        const elInputNama = document.getElementById('input-nama');
+        const elInputCatatan = document.getElementById('input-catatan');
+        const elInputFoto = document.getElementById('input-foto');
+        const elThumbnails = document.getElementById('thumbnails-container');
+        const elErrorFoto = document.getElementById('error-foto');
+        const elBtnSubmit = document.getElementById('btn-submit');
+        const elAlertSubmitted = document.getElementById('alert-submitted');
+
+        // Modals
+        const overlayMinggu = document.getElementById('overlay-minggu');
+        const modalConfirm = document.getElementById('modal-confirm');
+        const overlayLoading = document.getElementById('overlay-loading');
+        const overlaySuccess = document.getElementById('overlay-success');
+        const overlayError = document.getElementById('overlay-error');
+        const elSuccessTime = document.getElementById('success-time');
+        const elErrorMessage = document.getElementById('error-message');
+
+        function getAsiaJakartaDate() {
+            // Using standard JS Date. This will rely on device timezone.
+            // As per prompt, device date in Asia/Jakarta timezone is assumed.
+            return new Date(); 
+        }
+
+        function initDateAndTime() {
+            const now = getAsiaJakartaDate();
+            const dayOfWeek = now.getDay();
+            const date = now.getDate();
+            const month = now.getMonth();
+            const year = now.getFullYear();
+            
+            currentDayName = NAMA_HARI[dayOfWeek];
+            currentDateString = `${year}-${String(month+1).padStart(2, '0')}-${String(date).padStart(2, '0')}`;
+            
+            elDisplayDate.textContent = `${currentDayName}, ${date} ${NAMA_BULAN[month]} ${year}`;
+            
+            // Determine PIC
+            if (dayOfWeek === 0) {
+                currentPic = "Libur";
+                overlayMinggu.classList.add('active');
+            } else if (dayOfWeek === 1) { // Senin
+                currentPic = "Angkatan 23";
+            } else if (dayOfWeek === 2 || dayOfWeek === 4) { // Selasa, Kamis
+                currentPic = "Angkatan 25";
+            } else if (dayOfWeek === 3 || dayOfWeek === 5) { // Rabu, Jumat
+                currentPic = "Angkatan 24";
+            } else if (dayOfWeek === 6) { // Sabtu
+                currentPic = "Semua Angkatan";
+            }
+
+            elDisplayPic.textContent = currentPic;
+            elPicLabel.textContent = currentPic;
+
+            checkAlreadySubmitted();
+            buildChecklists();
+            loadDraft();
+            validateForm();
+        }
+
+        function updateClock() {
+            const now = getAsiaJakartaDate();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            elDisplayTime.textContent = `${hours}:${minutes}`;
+        }
+        
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        function createCheckItemHTML(task, typeClass = "") {
+            return `
+                <label class="check-item ${typeClass}" for="chk_${task.id}">
+                    <input type="checkbox" id="chk_${task.id}" class="task-checkbox" data-id="${task.id}" data-label="${task.label}">
+                    <span class="check-label">${task.label}</span>
+                </label>
+            `;
+        }
+
+        function buildChecklists() {
+            activeTasksList = [];
+            
+            // Umum
+            let htmlUmum = "";
+            TUGAS_UMUM.forEach(task => {
+                htmlUmum += createCheckItemHTML(task);
+                activeTasksList.push(task);
+            });
+            elTugasUmum.innerHTML = htmlUmum;
+
+            // Khusus
+            let htmlKhusus = "";
+            if (currentPic === "Semua Angkatan") {
+                ["Angkatan 23", "Angkatan 24", "Angkatan 25"].forEach(angkatan => {
+                    TUGAS_KHUSUS_MAP[angkatan].forEach(task => {
+                        htmlKhusus += createCheckItemHTML(task);
+                        activeTasksList.push(task);
+                    });
+                });
+            } else if (TUGAS_KHUSUS_MAP[currentPic]) {
+                TUGAS_KHUSUS_MAP[currentPic].forEach(task => {
+                    htmlKhusus += createCheckItemHTML(task);
+                    activeTasksList.push(task);
+                });
+            }
+            elTugasKhusus.innerHTML = htmlKhusus;
+
+            // Keamanan
+            let htmlKeamanan = "";
+            TUGAS_KEAMANAN.forEach(task => {
+                htmlKeamanan += createCheckItemHTML(task, "keamanan");
+                activeTasksList.push(task);
+            });
+            elTugasKeamanan.innerHTML = htmlKeamanan;
+
+            // Attach listeners to newly created checkboxes
+            document.querySelectorAll('.task-checkbox').forEach(cb => {
+                cb.addEventListener('change', () => {
+                    updateProgress();
+                    saveDraft();
+                });
+            });
+
+            totalCheckboxes = activeTasksList.length;
+            updateProgress();
+        }
+
+        function getDraftKey() {
+            return `piket_draft_${currentDateString}`;
+        }
+
+        function saveDraft() {
+            if (currentPic === "Libur") return;
+            
+            const tasksState = {};
+            document.querySelectorAll('.task-checkbox').forEach(cb => {
+                tasksState[cb.dataset.id] = cb.checked;
+            });
+
+            const draft = {
+                name: elInputNama.value,
+                notes: elInputCatatan.value,
+                tasks: tasksState
+            };
+            
+            localStorage.setItem('piket_name', elInputNama.value); // Global name memory
+            localStorage.setItem(getDraftKey(), JSON.stringify(draft)); // Daily draft
+            
+            validateForm();
+        }
+
+        function loadDraft() {
+            // Load global name
+            const savedName = localStorage.getItem('piket_name');
+            if (savedName) elInputNama.value = savedName;
+
+            // Load daily draft
+            const draftStr = localStorage.getItem(getDraftKey());
+            if (draftStr) {
+                try {
+                    const draft = JSON.parse(draftStr);
+                    if (draft.name) elInputNama.value = draft.name;
+                    if (draft.notes) elInputCatatan.value = draft.notes;
+                    
+                    if (draft.tasks) {
+                        document.querySelectorAll('.task-checkbox').forEach(cb => {
+                            if (draft.tasks[cb.dataset.id] !== undefined) {
+                                cb.checked = draft.tasks[cb.dataset.id];
+                            }
+                        });
+                    }
+                } catch (e) {
+                    console.error("Failed to parse draft", e);
+                }
+            }
+            updateProgress();
+        }
+
+        function checkAlreadySubmitted() {
+            if (localStorage.getItem(`piket_submitted_${currentDateString}`)) {
+                elAlertSubmitted.classList.remove('hidden');
+            } else {
+                elAlertSubmitted.classList.add('hidden');
+            }
+        }
+
+        function updateProgress() {
+            checkedCount = document.querySelectorAll('.task-checkbox:checked').length;
+            const percentage = totalCheckboxes === 0 ? 0 : (checkedCount / totalCheckboxes) * 100;
+            
+            elProgressBar.style.width = `${percentage}%`;
+            if (percentage === 100) {
+                elProgressBar.style.backgroundColor = 'var(--success)';
+            } else {
+                elProgressBar.style.backgroundColor = 'var(--primary)';
+            }
+            
+            elProgressText.textContent = `${checkedCount} dari ${totalCheckboxes} tugas selesai`;
+        }
+
+        function validateForm() {
+            const hasName = elInputNama.value.trim().length > 0;
+            const hasPhotos = photosData.length > 0;
+            elBtnSubmit.disabled = !(hasName && hasPhotos);
+        }
+
+        elInputNama.addEventListener('input', saveDraft);
+        elInputCatatan.addEventListener('input', saveDraft);
+
+        elInputFoto.addEventListener('change', function(e) {
+            const files = Array.from(e.target.files);
+            if (!files.length) return;
+            
+            elErrorFoto.style.display = 'none';
+            
+            // Limit check
+            const spaceLeft = 5 - photosData.length;
+            if (spaceLeft <= 0) {
+                elErrorFoto.textContent = "Maksimal 5 foto telah tercapai.";
+                elErrorFoto.style.display = 'block';
+                this.value = '';
+                return;
+            }
+
+            const filesToProcess = files.slice(0, spaceLeft);
+            if (files.length > spaceLeft) {
+                elErrorFoto.textContent = `Hanya ${spaceLeft} foto pertama yang ditambahkan (maks 5).`;
+                elErrorFoto.style.display = 'block';
+            }
+
+            filesToProcess.forEach(file => {
+                compressImage(file, (result) => {
+                    photosData.push(result);
+                    renderThumbnails();
+                    validateForm();
+                });
+            });
+            
+            // Reset input so selecting the same file again works
+            this.value = '';
+        });
+
+        function compressImage(file, callback) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    
+                    let width = img.width;
+                    let height = img.height;
+                    const MAX_SIDE = 1280;
+
+                    if (width > height) {
+                        if (width > MAX_SIDE) {
+                            height *= MAX_SIDE / width;
+                            width = MAX_SIDE;
+                        }
+                    } else {
+                        if (height > MAX_SIDE) {
+                            width *= MAX_SIDE / height;
+                            height = MAX_SIDE;
+                        }
+                    }
+
+                    canvas.width = width;
+                    canvas.height = height;
+                    ctx.drawImage(img, 0, 0, width, height);
+
+                    const dataUrl = canvas.toDataURL('image/jpeg', 0.7);
+                    const base64Data = dataUrl.split(',')[1];
+                    
+                    callback({
+                        name: file.name,
+                        mime: 'image/jpeg',
+                        data: base64Data,
+                        dataUrl: dataUrl // Keep for thumbnail preview
+                    });
+                };
+                img.src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function renderThumbnails() {
+            elThumbnails.innerHTML = '';
+            photosData.forEach((photo, index) => {
+                const div = document.createElement('div');
+                div.className = 'thumbnail-wrapper';
+                div.innerHTML = `
+                    <img src="${photo.dataUrl}" alt="Thumbnail">
+                    <button type="button" class="remove-photo-btn" onclick="removePhoto(${index})">✕</button>
+                `;
+                elThumbnails.appendChild(div);
+            });
+        }
+
+        window.removePhoto = function(index) {
+            photosData.splice(index, 1);
+            renderThumbnails();
+            validateForm();
+            elErrorFoto.style.display = 'none';
+        };
+
+        function buildPayload() {
+            const now = getAsiaJakartaDate();
+            const timeStr = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+            
+            const tasksPayload = [];
+            document.querySelectorAll('.task-checkbox').forEach(cb => {
+                tasksPayload.push({
+                    id: cb.dataset.id,
+                    label: cb.dataset.label,
+                    selesai: cb.checked
+                });
+            });
+
+            // Strip out dataUrl to save memory before stringify
+            const photosPayload = photosData.map(p => ({
+                name: p.name,
+                mime: p.mime,
+                data: p.data
+            }));
+
+            return {
+                tanggal: currentDateString,
+                hari: currentDayName,
+                jam: timeStr,
+                pic: currentPic,
+                nama: elInputNama.value.trim(),
+                tugas: tasksPayload,
+                catatan: elInputCatatan.value.trim(),
+                fotos: photosPayload
+            };
+        }
+
+        async function submitData() {
+            const payload = buildPayload();
+            overlayLoading.classList.add('active');
+            
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // text/plain avoids CORS preflight
+                    body: JSON.stringify(payload)
+                });
+                
+                const result = await response.json();
+                overlayLoading.classList.remove('active');
+                
+                if (result.ok) {
+                    handleSuccess(payload.jam);
+                } else {
+                    handleError(result.error || "Respon server tidak valid.");
+                }
+            } catch (error) {
+                overlayLoading.classList.remove('active');
+                handleError("Gagal menghubungi jaringan. Pastikan koneksi internet Anda stabil.");
+                console.error("Submit Error:", error);
+            }
+        }
+
+        elBtnSubmit.addEventListener('click', () => {
+            if (checkedCount < totalCheckboxes) {
+                modalConfirm.classList.add('active');
+            } else {
+                submitData();
+            }
+        });
+
+        document.getElementById('btn-cancel-submit').addEventListener('click', () => {
+            modalConfirm.classList.remove('active');
+        });
+
+        document.getElementById('btn-confirm-submit').addEventListener('click', () => {
+            modalConfirm.classList.remove('active');
+            submitData();
+        });
+
+        document.getElementById('btn-close-error').addEventListener('click', () => {
+            overlayError.classList.remove('active');
+        });
+
+        document.getElementById('btn-retry').addEventListener('click', () => {
+            overlayError.classList.remove('active');
+            submitData();
+        });
+
+        document.getElementById('btn-reset').addEventListener('click', () => {
+            overlaySuccess.classList.remove('active');
+            
+            // Clear form but keep name
+            elInputCatatan.value = '';
+            document.querySelectorAll('.task-checkbox').forEach(cb => cb.checked = false);
+            photosData = [];
+            renderThumbnails();
+            
+            // Clear draft memory
+            localStorage.removeItem(getDraftKey());
+            
+            updateProgress();
+            validateForm();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        function handleSuccess(timeStr) {
+            // Set success time
+            elSuccessTime.textContent = timeStr;
+            
+            // Set submitted flag
+            localStorage.setItem(`piket_submitted_${currentDateString}`, 'true');
+            checkAlreadySubmitted();
+            
+            // Clear draft but NOT name
+            localStorage.removeItem(getDraftKey());
+            
+            // Show overlay
+            overlaySuccess.classList.add('active');
+        }
+
+        function handleError(msg) {
+            elErrorMessage.textContent = msg;
+            overlayError.classList.add('active');
+        }
+
+        // Initialize App
+        window.addEventListener('DOMContentLoaded', () => {
+            initDateAndTime();
+        });
+
+    </script>
+</body>
+</html>
