@@ -491,14 +491,14 @@
             <span class="icon">⚠️</span>
             <div>
                 <strong>Sudah Ada Laporan</strong><br>
-                Laporan hari ini sudah dikirim. Anda dapat mengirim ulang jika ada perbaikan.
+                Anda sudah mengirim laporan untuk hari ini. Anda masih dapat mengirim ulang jika ada perbaikan.
             </div>
         </div>
 
         <!-- Identity Section -->
         <div class="card">
             <div class="form-group" style="margin:0;">
-                <label for="input-nama">Nama Pelapor <span style="color: var(--danger);">*</span></label>
+                <label for="input-nama">Nama Petugas <span style="color: var(--danger);">*</span></label>
                 <input type="text" id="input-nama" placeholder="Masukkan nama Anda..." required autocomplete="name">
             </div>
         </div>
@@ -993,17 +993,20 @@
                 pic: currentPic,
                 nama: elInputNama.value.trim(),
                 tugas: tasksPayload,
-                catatan: elInputCatatan.value.trim()
+                catatan: elInputCatatan.value.trim(),
+                fotos: [] // Ditambahkan kembali agar lolos validasi Google Apps Script
             };
 
             // Menambahkan foto sebagai kolom terpisah (foto_1, foto_2, dst)
             for (let i = 0; i < 5; i++) {
                 if (i < photosData.length) {
-                    payload[`foto_${i + 1}`] = {
+                    const photoObj = {
                         name: photosData[i].name,
                         mime: photosData[i].mime,
                         data: photosData[i].data
                     };
+                    payload[`foto_${i + 1}`] = photoObj;
+                    payload.fotos.push(photoObj); // Mengisi array fotos untuk server
                 } else {
                     payload[`foto_${i + 1}`] = ""; // Kosong jika tidak ada foto untuk slot ini
                 }
